@@ -47,7 +47,7 @@ function matchOrder(newOrder: Order) {
 
       if (currOrder.amount === 0) {
         ordersToRemove.push(currOrder.orderId!)
-        log(`FILLED ${currOrder.side} @ ${currOrder.price} ${amountFilled}`)
+        log(`FILLED ${currOrder.side} @ ${newOrder.price} ${amountFilled}`)
       }
       if (newOrder.amount <= 0) {
         log(`FILLED ${newOrder.side} @ ${newOrder.price} ${amountFilled}`)
@@ -62,22 +62,26 @@ function matchOrder(newOrder: Order) {
 }
 
 function addOrder(order: Order): string {
-  log(`PLACED ${order.side} @ ${order.price} ${order.amount}`)
   order.orderId = uuidv4()
 
+  let orderQueue
   switch (order.side) {
-    case OrderSide.Buy: {
-      matchOrder(order)
-      if (order.amount > 0) buyOrders.set(order.orderId, order)
+    case OrderSide.Buy:
+      orderQueue = buyOrders
       break
-    }
+
     case OrderSide.Sell:
-      matchOrder(order)
-      if (order.amount > 0) sellOrders.set(order.orderId, order)
+      orderQueue = sellOrders
       break
 
     default:
       throw new Error('Wrong order side: ' + order.side)
+  }
+
+  matchOrder(order)
+  if (order.amount > 0) {
+    orderQueue.set(order.orderId, order)
+    log(`PLACED ${order.side} @ ${order.price} ${order.amount}`)
   }
   return order.orderId
 }
