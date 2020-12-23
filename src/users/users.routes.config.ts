@@ -15,6 +15,10 @@ export class UsersRoutes extends CommonRoutesConfig {
       .post(UserController.addUser)
 
     this.app
+      .route('/users/:userId/orders')
+      .get(orderController.getOrdersForUser)
+
+    this.app
       .route(`/users/:userId`)
       .all(
         (
@@ -27,10 +31,6 @@ export class UsersRoutes extends CommonRoutesConfig {
         },
       )
       .get(UserController.getUserWithId)
-
-    this.app
-      .route('/users/:userId/orders')
-      .get(orderController.getOrdersForUser)
 
     return this.app
   }
