@@ -19,15 +19,15 @@ const debugLog: debug.IDebugger = debug('app')
 
 app.use(bodyparser.json())
 app.use(cors())
-app.use(
-  expressWinston.logger({
-    transports: [new winston.transports.Console()],
-    format: winston.format.combine(
-      winston.format.colorize(),
-      winston.format.json(),
-    ),
-  }),
-)
+// app.use(
+//   expressWinston.logger({
+//     transports: [new winston.transports.Console()],
+//     format: winston.format.combine(
+//       winston.format.colorize(),
+//       winston.format.json(),
+//     ),
+//   }),
+// )
 
 routes.push(new UsersRoutes(app))
 routes.push(new OrdersRoutes(app))
