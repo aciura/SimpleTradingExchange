@@ -38,7 +38,7 @@ function matchOrder(newOrder: Order) {
 
   while (!iterResult.done && newOrder.amount > 0) {
     const currOrder: Order = iterResult.value
-    log(`checking ${JSON.stringify(currOrder)}`)
+    // log(`checking ${JSON.stringify(currOrder)}`)
 
     if (isPriceMatch(currOrder, newOrder)) {
       const amountFilled = Math.min(newOrder.amount, currOrder.amount)
@@ -47,10 +47,12 @@ function matchOrder(newOrder: Order) {
 
       if (currOrder.amount === 0) {
         ordersToRemove.push(currOrder.orderId!)
-        log(`FILLED ${currOrder.side} @ ${newOrder.price} ${amountFilled}`)
+        log(
+          `FILLED ${currOrder.side} @ ${currOrder.price} ${amountFilled} ${currOrder.orderId}`,
+        )
       }
       if (newOrder.amount <= 0) {
-        log(`FILLED ${newOrder.side} @ ${newOrder.price} ${amountFilled}`)
+        log(`FILLED ${newOrder.side} @ ${currOrder.price} ${amountFilled}`)
       }
     }
     iterResult = ordersIterator.next()
@@ -113,10 +115,16 @@ function getOrdersForUser(userId: string): Order[] {
   return orders
 }
 
+function clearAllOrders() {
+  buyOrders.clear()
+  sellOrders.clear()
+}
+
 export default {
   find: findOrder,
   getOrderbook,
   add: addOrder,
   cancel: cancelOrder,
   getAllForUser: getOrdersForUser,
+  clearAll: clearAllOrders,
 }
