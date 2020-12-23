@@ -1,8 +1,12 @@
 import Order, { OrderSide } from '../models/order'
 import { v4 as uuidv4 } from 'uuid'
 import debug from 'debug'
+// TODO: use import { MinHeap, MaxHeap } from '@datastructures-js/heap'
 const log: debug.IDebugger = debug('orders')
 
+// To increase order matching use Min/Max Heap with O(log(n))
+// const buyOrders = new MaxHeap()
+// const sellOrders = new MinHeap()
 const buyOrders: Map<string, Order> = new Map()
 const sellOrders: Map<string, Order> = new Map()
 
@@ -15,38 +19,61 @@ function findOrder(orderId: string): Order | undefined {
   return order
 }
 
+function priceMatchBuyOrder(sellOrder: Order, newOrder: Order): boolean {
+  return sellOrder.price <= newOrder.price
+}
+
+function priceMatchSellOrder(buyOrder: Order, newOrder: Order): boolean {
+  return buyOrder.price >= newOrder.price
+}
+
+function matchOrder(newOrder: Order) {
+  const ordersToRemove: string[] = []
+  const ordersToMatch = newOrder.side === OrderSide.Buy ? sellOrders : buyOrders
+  const isPriceMatch =
+    newOrder.side === OrderSide.Buy ? priceMatchBuyOrder : priceMatchSellOrder
+
+  const ordersIterator = ordersToMatch.values()
+  let iterResult: IteratorResult<Order> = ordersIterator.next()
+
+  while (!iterResult.done && newOrder.amount > 0) {
+    const currOrder: Order = iterResult.value
+    log(`checking ${JSON.stringify(currOrder)}`)
+
+    if (isPriceMatch(currOrder, newOrder)) {
+      const amountFilled = Math.min(newOrder.amount, currOrder.amount)
+      currOrder.amount -= amountFilled
+      newOrder.amount -= amountFilled
+
+      if (currOrder.amount === 0) {
+        ordersToRemove.push(currOrder.orderId!)
+        log(`FILLED ${currOrder.side} @ ${currOrder.price} ${amountFilled}`)
+      }
+      if (newOrder.amount <= 0) {
+        log(`FILLED ${newOrder.side} @ ${newOrder.price} ${amountFilled}`)
+      }
+    }
+    iterResult = ordersIterator.next()
+  }
+
+  ordersToRemove.forEach((orderId) => {
+    ordersToMatch.delete(orderId)
+  })
+}
+
 function addOrder(order: Order): string {
   log(`PLACED ${order.side} @ ${order.price} ${order.amount}`)
   order.orderId = uuidv4()
 
   switch (order.side) {
     case OrderSide.Buy: {
-      const ordersToRemove: string[] = []
-      sellOrders.forEach((sellOrder) => {
-        // TODO: make it more readable
-        if (order.amount > 0 && sellOrder.price <= order.price) {
-          const amountFilled = Math.min(order.amount, sellOrder.amount)
-          sellOrder.amount -= amountFilled
-          order.amount -= amountFilled
-          if (sellOrder.amount === 0) {
-            ordersToRemove.push(sellOrder.orderId!)
-            log(
-              `FILLED ${sellOrder.side} @ ${sellOrder.price} ${sellOrder.amount}`,
-            )
-          }
-          if (order.amount <= 0) {
-            log(`FILLED ${order.side} @ ${order.price} ${order.amount}`)
-          }
-        }
-      })
-      ordersToRemove.forEach((orderId) => {
-        sellOrders.delete(orderId)
-      })
+      matchOrder(order)
       if (order.amount > 0) buyOrders.set(order.orderId, order)
       break
     }
     case OrderSide.Sell:
-      sellOrders.set(order.orderId, order)
+      matchOrder(order)
+      if (order.amount > 0) sellOrders.set(order.orderId, order)
       break
 
     default:
