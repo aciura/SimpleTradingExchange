@@ -11,6 +11,7 @@
   "author": "Adrian Ciura",
   "license": "ISC",
   "dependencies": {
+    "@datastructures-js/heap": "^2.0.0",
     "cors": "^2.8.5",
     "debug": "^4.3.1",
     "express": "^4.17.1",
