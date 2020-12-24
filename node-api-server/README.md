@@ -17,7 +17,8 @@ In the project directory, you can run:
 
 ### `npm start`
 
-Runs the server. For displaying order service messages it's using WINDOWS command `set DEBUG=orders`,
+Runs the server.\ 
+For displaying order service messages it's using WINDOWS command `set DEBUG=orders`,
 on LINUX machine please change it to "DEBUG=orders,app && tsc && node ./dist/app.js".\
 Somehow setting ENV with `cross-env` does not works for on Windows with Debug library.\
 
