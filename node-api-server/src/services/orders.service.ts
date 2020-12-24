@@ -47,9 +47,7 @@ function matchOrder(newOrder: IOrder) {
 
       if (currOrder.amount === 0) {
         ordersToRemove.push(currOrder.orderId!)
-        log(
-          `FILLED ${currOrder.side} @ ${currOrder.price} ${amountFilled} ${currOrder.orderId}`,
-        )
+        log(`FILLED ${currOrder.side} @ ${currOrder.price} ${amountFilled}`)
       }
       if (newOrder.amount <= 0) {
         log(`FILLED ${newOrder.side} @ ${currOrder.price} ${amountFilled}`)

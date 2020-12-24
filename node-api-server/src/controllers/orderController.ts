@@ -1,5 +1,5 @@
 import express from 'express'
-import IOrder from '../models/order'
+import IOrder, { OrderSide } from '../models/order'
 import OrdersService from '../services/orders.service'
 
 const getOrderbook = (
@@ -27,8 +27,16 @@ const placeOrder = (
 ) => {
   if (!req.body.userId) {
     res.status(400).send({ error: 'UserId is missing' })
+  } else if (!req.body.amount || req.body.amount <= 0) {
+    res.status(400).send({ error: 'Amount has to be above 0' })
+  } else if (!req.body.price || req.body.price <= 0) {
+    res.status(400).send({ error: 'Price has to be above 0' })
+  } else if (
+    !req.body.side ||
+    ![OrderSide.Buy, OrderSide.Sell].includes(req.body.side)
+  ) {
+    res.status(400).send({ error: 'Incorrect order side' })
   } else {
-    // todo: add order body validation
     const newOrder: IOrder = {
       price: req.body.price,
       amount: req.body.amount,
