@@ -7,21 +7,31 @@ type OrdersProps = {
 
 export function Orders({ orders, onTradeCancel }: OrdersProps) {
   return (
-    <table>
-      <thead>
-        <tr>
-          <th>Amount</th>
-          <th>Price</th>
-          <th>Side</th>
-          <th>User</th>
-        </tr>
-      </thead>
-      <tbody>
-        {orders.map((order: IOrder) => (
-          <Order key={order.orderId} {...order} cancelOrder={onTradeCancel} />
-        ))}
-      </tbody>
-    </table>
+    <>
+      {orders && orders.length ? (
+        <table>
+          <thead>
+            <tr>
+              <th>Amount</th>
+              <th>Price</th>
+              <th>Side</th>
+              <th>User</th>
+            </tr>
+          </thead>
+          <tbody>
+            {orders.map((order: IOrder) => (
+              <Order
+                key={order.orderId}
+                {...order}
+                cancelOrder={onTradeCancel}
+              />
+            ))}
+          </tbody>
+        </table>
+      ) : (
+        <span>No active orders</span>
+      )}
+    </>
   )
 }
 

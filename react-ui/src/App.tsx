@@ -12,12 +12,20 @@ function App() {
     if (name !== username) setUsername(name)
   }
 
-  const [timestamp, setTimestamp] = React.useState(new Date().getTime())
+  const {
+    orders,
+    isLoading,
+    mutate: mutateOrderbook,
+  } = OrderService.useOrderbook()
+  const {
+    orders: ordersForUser,
+    isLoading: ordersForUserLoading,
+    mutate: mutateOrdersForUser,
+  } = OrderService.useOrdersForUser(username)
 
-  const { orders, isLoading, mutate } = OrderService.useOrderbook()
   const updateOrders = async () => {
-    await mutate()
-    setTimestamp(new Date().getTime())
+    mutateOrderbook()
+    mutateOrdersForUser()
   }
 
   return (
@@ -26,7 +34,12 @@ function App() {
       <Orderbook isLoading={isLoading} orders={orders} />
       <Username onChange={usernameChange} />
       <PlaceOrder username={username} updateOrders={updateOrders} />
-      <OrdersForUser key={timestamp} username={username} />
+      <OrdersForUser
+        username={username}
+        orders={ordersForUser}
+        isLoading={ordersForUserLoading}
+        updateOrders={updateOrders}
+      />
     </div>
   )
 }
