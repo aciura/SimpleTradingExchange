@@ -17,16 +17,17 @@ In the project directory, you can run:
 
 ### `npm start`
 
-Runs the server.\ 
-For displaying order service messages it's using WINDOWS command `set DEBUG=orders`,
-on LINUX machine please change it to "DEBUG=orders,app && tsc && node ./dist/app.js".\
-Somehow setting ENV with `cross-env` does not works for on Windows with Debug library.\
+Runs the server.
 
-Open [http://localhost:4000](http://localhost:4000) to view server status in the browser.\
+For displaying order service messages it's using WINDOWS command `set DEBUG=orders`,
+on LINUX machine please change it to "DEBUG=orders,app && tsc && node ./dist/app.js".
+Somehow setting ENV with `cross-env` does not works for on Windows with Debug library.
+
+Open [http://localhost:4000](http://localhost:4000) to view server status in the browser.
 
 ### `npm test`
 
-Launches the tests.\
+Launches the tests.
 
 ### `npm run debug`
 
