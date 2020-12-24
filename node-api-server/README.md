@@ -21,7 +21,7 @@ Runs the server.
 
 For displaying order service messages it's using WINDOWS command `set DEBUG=orders`,
 on LINUX machine please change it to "DEBUG=orders,app && tsc && node ./dist/app.js".
-Somehow setting ENV with `cross-env` does not works for on Windows with Debug library.
+Somehow setting ENV with `cross-env` does not work for me on Windows with Debug library.
 
 Open [http://localhost:4000](http://localhost:4000) to view server status in the browser.
 
