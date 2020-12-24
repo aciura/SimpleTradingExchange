@@ -36,13 +36,18 @@ export function PlaceOrder({ username, updateOrders }: PlaceOrderProps) {
     <div className={styles.placeOrder}>
       <label htmlFor='side'>Side</label>
       <select
+        style={{ backgroundColor: side === OrderSide.Buy ? 'green' : 'red' }}
         onChange={(e) =>
           setSide(
             e.target.value === OrderSide.Buy ? OrderSide.Buy : OrderSide.Sell,
           )
         }>
-        <option value={OrderSide.Buy}>Buy</option>
-        <option value={OrderSide.Sell}>Sell</option>
+        <option style={{ backgroundColor: 'green' }} value={OrderSide.Buy}>
+          Buy
+        </option>
+        <option style={{ backgroundColor: 'red' }} value={OrderSide.Sell}>
+          Sell
+        </option>
       </select>
       <label htmlFor='price'>Price</label>
       <input
@@ -58,7 +63,7 @@ export function PlaceOrder({ username, updateOrders }: PlaceOrderProps) {
         type='number'
         onChange={(e) => setAmount(e.target.value)}
       />
-      <button onClick={submitOrder}>Submit</button>
+      <button onClick={submitOrder}>Submit ✔️</button>
       {info.message && (
         <span className={info.isError ? styles.error : styles.success}>
           {info.message}

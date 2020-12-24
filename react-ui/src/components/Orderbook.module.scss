@@ -1,6 +1,9 @@
 .orderbook {
   border: 1px solid black;
   padding: 1rem;
+  width: clamp(30rem, 40%, 100rem);
+  margin: 0 0 1rem 1rem;
+  box-shadow: 2px 2px 4px black;
 
   h3 {
     margin: 0 0 1rem;

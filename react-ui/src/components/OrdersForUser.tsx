@@ -3,6 +3,7 @@ import { Spinner } from './common'
 import { Orders } from './Orders'
 import OrderService from '../services/order.service'
 import IOrder from '../models/order'
+import styles from './OrdersForUser.module.scss'
 
 export type OrdersForUserProps = {
   username: string
@@ -24,7 +25,7 @@ export function OrdersForUser({
   }
 
   return (
-    <div>
+    <div className={styles.ordersForUser}>
       <h4>User {username} orders</h4>
       {username && isLoading && <Spinner />}
       {username && !isLoading && (

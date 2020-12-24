@@ -1,4 +1,5 @@
 import IOrder from '../models/order'
+import { Order } from './Order'
 
 type OrdersProps = {
   orders: IOrder[]
@@ -35,29 +36,6 @@ export function Orders({ orders, onTradeCancel }: OrdersProps) {
   )
 }
 
-interface OrderProps extends IOrder {
+export interface OrderProps extends IOrder {
   cancelOrder?: (orderId: string | undefined) => Promise<void>
-}
-
-export function Order({
-  price,
-  amount,
-  side,
-  userId,
-  orderId,
-  cancelOrder,
-}: OrderProps) {
-  return (
-    <tr>
-      <td>{amount}</td>
-      <td>{price}</td>
-      <td>{side}</td>
-      <td>{userId}</td>
-      {cancelOrder && (
-        <td>
-          <button onClick={() => cancelOrder(orderId)}>Cancel</button>
-        </td>
-      )}
-    </tr>
-  )
 }

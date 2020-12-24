@@ -1,16 +1,22 @@
 .App {
   text-align: left;
   color: rgb(250, 250, 250);
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  align-items: flex-start;
 
   .App-header {
     background-color: rgb(25, 31, 48);
     display: flex;
     flex-direction: column;
-    align-items: center;
+    align-items: flex-start;
     justify-content: flex-start;
     font-size: calc(10px + 2vmin);
     color: rgb(250, 250, 250);
     padding: 1rem;
+    width: 100%;
+    box-shadow: 2px 2px 4px black;
   }
 
   .App-link {

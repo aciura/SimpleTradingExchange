@@ -30,8 +30,7 @@ function App() {
 
   return (
     <div className='App'>
-      <header className='App-header'>Trading Exchange</header>
-      <Orderbook isLoading={isLoading} orders={orders} />
+      <header className='App-header'>⚡Trading Exchange</header>
       <Username onChange={usernameChange} />
       <PlaceOrder username={username} updateOrders={updateOrders} />
       <OrdersForUser
@@ -40,6 +39,7 @@ function App() {
         isLoading={ordersForUserLoading}
         updateOrders={updateOrders}
       />
+      <Orderbook isLoading={isLoading} orders={orders} />
     </div>
   )
 }

@@ -1,0 +1,12 @@
+.ordersForUser {
+  border: 1px solid black;
+  padding: 1rem;
+  margin: 0 0 1rem 1rem;
+  width: clamp(20rem, 20%, 100rem);
+  box-shadow: 2px 2px 4px black;
+
+  h3,
+  h4 {
+    margin: 0 0 0.5rem;
+  }
+}
