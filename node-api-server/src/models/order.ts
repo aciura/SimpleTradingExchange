@@ -3,7 +3,7 @@ export enum OrderSide {
   Sell = 'ASK',
 }
 
-export default interface Order {
+export default interface IOrder {
   orderId?: string
   price: number
   amount: number

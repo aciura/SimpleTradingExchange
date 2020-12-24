@@ -1,3 +1,3 @@
-export default interface User {
+export default interface IUser {
   userId: string
 }

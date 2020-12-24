@@ -1,5 +1,5 @@
 import OrdersService from './orders.service'
-import Order, { OrderSide } from '../models/order'
+import IOrder, { OrderSide } from '../models/order'
 
 describe('matching trades', () => {
   beforeEach(() => {

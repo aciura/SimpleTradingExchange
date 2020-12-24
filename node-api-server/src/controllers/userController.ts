@@ -1,7 +1,7 @@
-import User from '../models/user'
+import IUser from '../models/user'
 import express from 'express'
 
-const userList: User[] = [
+const userList: IUser[] = [
   {
     userId: '1234',
   },
@@ -16,7 +16,7 @@ const addUser = (
   res: express.Response,
 ) => {
   // TODO: add body validation
-  const newUser: User = { userId: req.body.userId }
+  const newUser: IUser = { userId: req.body.userId }
   userList.push(newUser)
   res.status(201).send({ newUser })
 }
@@ -35,8 +35,9 @@ const getUserWithId = (
   }
 }
 
-export default {
+const UserController = {
   getListOfUsers,
   addUser,
   getUserWithId,
 }
+export default UserController

@@ -1,8 +1,8 @@
 import OrdersService from './orders.service'
-import Order, { OrderSide } from '../models/order'
+import IOrder, { OrderSide } from '../models/order'
 
 describe('orders.service', () => {
-  const order: Order = {
+  const order: IOrder = {
     side: OrderSide.Buy,
     price: 23000,
     amount: 1,

@@ -1,4 +1,4 @@
-import Order, { OrderSide } from '../models/order'
+import IOrder, { OrderSide } from '../models/order'
 import { v4 as uuidv4 } from 'uuid'
 import debug from 'debug'
 // TODO: use import { MinHeap, MaxHeap } from '@datastructures-js/heap'
@@ -7,37 +7,37 @@ const log: debug.IDebugger = debug('orders')
 // To increase order matching use Min/Max Heap with O(log(n))
 // const buyOrders = new MaxHeap()
 // const sellOrders = new MinHeap()
-const buyOrders: Map<string, Order> = new Map()
-const sellOrders: Map<string, Order> = new Map()
+const buyOrders: Map<string, IOrder> = new Map()
+const sellOrders: Map<string, IOrder> = new Map()
 
-function getOrderbook(): Order[] {
+function getOrderbook(): IOrder[] {
   return [...buyOrders.values(), ...sellOrders.values()]
 }
 
-function findOrder(orderId: string): Order | undefined {
+function findOrder(orderId: string): IOrder | undefined {
   const order = sellOrders.get(orderId) ?? buyOrders.get(orderId)
   return order
 }
 
-function priceMatchBuyOrder(sellOrder: Order, newOrder: Order): boolean {
+function priceMatchBuyOrder(sellOrder: IOrder, newOrder: IOrder): boolean {
   return sellOrder.price <= newOrder.price
 }
 
-function priceMatchSellOrder(buyOrder: Order, newOrder: Order): boolean {
+function priceMatchSellOrder(buyOrder: IOrder, newOrder: IOrder): boolean {
   return buyOrder.price >= newOrder.price
 }
 
-function matchOrder(newOrder: Order) {
+function matchOrder(newOrder: IOrder) {
   const ordersToRemove: string[] = []
   const ordersToMatch = newOrder.side === OrderSide.Buy ? sellOrders : buyOrders
   const isPriceMatch =
     newOrder.side === OrderSide.Buy ? priceMatchBuyOrder : priceMatchSellOrder
 
   const ordersIterator = ordersToMatch.values()
-  let iterResult: IteratorResult<Order> = ordersIterator.next()
+  let iterResult: IteratorResult<IOrder> = ordersIterator.next()
 
   while (!iterResult.done && newOrder.amount > 0) {
-    const currOrder: Order = iterResult.value
+    const currOrder: IOrder = iterResult.value
     // log(`checking ${JSON.stringify(currOrder)}`)
 
     if (isPriceMatch(currOrder, newOrder)) {
@@ -63,7 +63,7 @@ function matchOrder(newOrder: Order) {
   })
 }
 
-function addOrder(order: Order): string {
+function addOrder(order: IOrder): string {
   order.orderId = uuidv4()
 
   let orderQueue
@@ -104,8 +104,8 @@ function cancelOrder(orderId: string) {
   return true
 }
 
-function getOrdersForUser(userId: string): Order[] {
-  const orders: Order[] = []
+function getOrdersForUser(userId: string): IOrder[] {
+  const orders: IOrder[] = []
   buyOrders.forEach((o) => {
     if (o.userId === userId) orders.push(o)
   })
