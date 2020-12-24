@@ -24,7 +24,7 @@ export function Orderbook({ orders, isLoading }: OrderBookProps) {
             <h4>Buy</h4>
             <Orders
               orders={orders
-                .filter((o) => o.side === OrderSide.Buy)
+                ?.filter((o) => o.side === OrderSide.Buy)
                 .sort(DescPriceComparer)}
             />
           </div>
@@ -32,7 +32,7 @@ export function Orderbook({ orders, isLoading }: OrderBookProps) {
             <h4>Sell</h4>
             <Orders
               orders={orders
-                .filter((o) => o.side === OrderSide.Sell)
+                ?.filter((o) => o.side === OrderSide.Sell)
                 .sort(AscPriceComparer)}
             />
           </div>
