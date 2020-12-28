@@ -1,5 +1,5 @@
 import express from 'express'
-import IOrder, { OrderSide } from '../models/order'
+import IOrder, { OrderSide, OrderStatus } from '../models/order'
 import OrdersService from '../services/orders.service'
 
 const getOrderbook = (
@@ -42,6 +42,7 @@ const placeOrder = (
       amount: req.body.amount,
       side: req.body.side,
       userId: req.body.userId,
+      status: OrderStatus.ACTIVE,
     }
     const orderId = OrdersService.add(newOrder)
     res.status(201).send({ orderId: orderId })
