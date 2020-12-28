@@ -4,19 +4,25 @@ import { Order } from './Order'
 type OrdersProps = {
   orders: IOrder[]
   onTradeCancel?: (orderId: string | undefined) => Promise<void>
+  showOrderStatus?: boolean
 }
 
-export function Orders({ orders, onTradeCancel }: OrdersProps) {
+export function Orders({
+  orders,
+  onTradeCancel,
+  showOrderStatus = false,
+}: OrdersProps) {
   return (
     <>
       {orders && orders.length ? (
         <table>
           <thead>
             <tr>
+              {showOrderStatus && <th>Status</th>}
               <th>Amount</th>
               <th>Price</th>
               <th>Side</th>
-              <th>User</th>
+              {/* <th>User</th> */}
             </tr>
           </thead>
           <tbody>
@@ -25,6 +31,7 @@ export function Orders({ orders, onTradeCancel }: OrdersProps) {
                 key={order.orderId}
                 {...order}
                 cancelOrder={onTradeCancel}
+                showStatus={showOrderStatus}
               />
             ))}
           </tbody>
@@ -34,8 +41,4 @@ export function Orders({ orders, onTradeCancel }: OrdersProps) {
       )}
     </>
   )
-}
-
-export interface OrderProps extends IOrder {
-  cancelOrder?: (orderId: string | undefined) => Promise<void>
 }

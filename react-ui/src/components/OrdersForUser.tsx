@@ -30,7 +30,11 @@ export function OrdersForUser({
       {username && isLoading && <Spinner />}
       {username && !isLoading && (
         <div>
-          <Orders orders={orders} onTradeCancel={cancelOrder} />
+          <Orders
+            orders={orders}
+            onTradeCancel={cancelOrder}
+            showOrderStatus={true}
+          />
         </div>
       )}
     </div>

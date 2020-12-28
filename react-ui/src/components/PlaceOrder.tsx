@@ -1,5 +1,5 @@
 import React from 'react'
-import { OrderSide } from '../models/order'
+import { OrderSide, OrderStatus } from '../models/order'
 import OrderService from '../services/order.service'
 import styles from './PlaceOrder.module.scss'
 
@@ -20,6 +20,7 @@ export function PlaceOrder({ username, updateOrders }: PlaceOrderProps) {
       price: Number(price),
       side,
       userId: username,
+      status: OrderStatus.ACTIVE,
     })
     if (response.isError) {
       setInfo({ isError: true, message: response.message })

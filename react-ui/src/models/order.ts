@@ -3,12 +3,19 @@ export enum OrderSide {
   Sell = 'ASK',
 }
 
+export enum OrderStatus {
+  ACTIVE = 'ACTIVE',
+  FULFILLED = 'FULFILLED',
+  CANCELLED = 'CANCELLED',
+}
+
 export default interface IOrder {
   orderId?: string
   price: number
   amount: number
   side: OrderSide
   userId: string
+  status: OrderStatus
 }
 
 export function DescPriceComparer(order1: IOrder, order2: IOrder): number {
