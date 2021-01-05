@@ -8,7 +8,7 @@ Project is using:
 
 APi server is starting up on localhost:4000
 
-UI web app using this api server is in /react-ui.
+UI web app using this api server is in [/react-ui](https://github.com/aciura/SimpleTradingExchange/tree/main/react-ui).
 
 ## Available Scripts
 
