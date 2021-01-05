@@ -7,7 +7,7 @@ Project is using:
 - [SWR](https://swr.vercel.app/) for fetching data on demand
 - Node-Sass
 
-Project requires NodeJs api server running on localhost:4000. Api server source code is in /node-api-server
+Project requires NodeJs api server running on localhost:4000. Api server source code is in [/node-api-server](https://github.com/aciura/SimpleTradingExchange/tree/main/node-api-server).
 
 ## Available Scripts
 
