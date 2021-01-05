@@ -4,7 +4,6 @@ Project is using:
 
 - Express Js Server
 - TypeScript
-- [SWR](https://swr.vercel.app/) for fetching data on demand
 - [Debug](https://github.com/visionmedia/debug#readme) for console logs
 
 APi server is starting up on localhost:4000
