@@ -46,9 +46,14 @@ app.get('/', (req: express.Request, res: express.Response) => {
   res.status(200).send(`Server up and running!`)
 })
 
-server.listen(port, () => {
-  debugLog(`Server running at http://localhost:${port}`)
-  routes.forEach((route: CommonRoutesConfig) => {
-    debugLog(`Routes configured for ${route.getName()}`)
+if (process.env.NODE_ENV !== 'test') {
+  // Start server only when not testing
+  server.listen(port, () => {
+    debugLog(`Server running at http://localhost:${port}`)
+    routes.forEach((route: CommonRoutesConfig) => {
+      debugLog(`Routes configured for ${route.getName()}`)
+    })
   })
-})
+}
+
+export default app
