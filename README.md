@@ -1,4 +1,4 @@
-# Simple Trading Exchange
+# Simple Trading Exchange (weekend project done in ~8h)
 Simplified Trading Exchange with React UI and NodeJs api server.
 
 Please check: 
